@@ -78,10 +78,10 @@ namespace sdl
 		void setBackgroundColor(const Color &c);
 		Color getBackgroundColor();
 
-/*		void point(float x, float y);
-		void triangle(DrawMode mode, float x1, float y1, float x2, float y2, float x3, float y3);
+		void point(float x, float y);
+/*		void triangle(DrawMode mode, float x1, float y1, float x2, float y2, float x3, float y3);*/
 		void rectangle(DrawMode mode, float x, float y, float w, float h);
-		void quad(DrawMode mode, float x1, float y1, float x2, float y2, float x3, float y3, float x4, float y4);
+/*		void quad(DrawMode mode, float x1, float y1, float x2, float y2, float x3, float y3, float x4, float y4);
 		void circle(DrawMode mode, float x, float y, float radius, int points = 10);*/
 	}; // Graphics
 } // sdl

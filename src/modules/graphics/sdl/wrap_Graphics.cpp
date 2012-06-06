@@ -168,22 +168,35 @@ namespace sdl
 		return 4;
 	}
 
-/*	int w_point(lua_State *L)
+	int w_point(lua_State *L)
 	{
+		float x = luaL_checknumber(L, 1);
+		float y = luaL_checknumber(L, 2);
+		instance->point(x, y);
 		return 0;
 	}
 
-	int w_triangle(lua_State *L)
+/*	int w_triangle(lua_State *L)
 	{
 		return 0;
-	}
+	}*/
 
 	int w_rectangle(lua_State *L)
 	{
+		Graphics::DrawMode mode;
+		const char * str = luaL_checkstring(L, 1);
+		if (!Graphics::getConstant(str, mode))
+			return luaL_error(L, "Incorrect draw mode %s", str);
+
+		float x = luaL_checknumber(L, 2);
+		float y = luaL_checknumber(L, 3);
+		float w = luaL_checknumber(L, 4);
+		float h = luaL_checknumber(L, 5);
+		instance->rectangle(mode, x, y, w, h);
 		return 0;
 	}
 
-	int w_quad(lua_State *L)
+/*	int w_quad(lua_State *L)
 	{
 		return 0;
 	}
@@ -223,10 +236,10 @@ namespace sdl
 		{ "getColor", w_getColor },
 		{ "setBackgroundColor", w_setBackgroundColor },
 		{ "getBackgroundColor", w_getBackgroundColor },
-/*		{ "point", w_point },
-		{ "triangle", w_triangle },
+		{ "point", w_point },
+/*		{ "triangle", w_triangle },*/
 		{ "rectangle", w_rectangle },
-		{ "quad", w_quad },
+/*		{ "quad", w_quad },
 		{ "circle", w_circle },
 		{ "draw", w_draw },
 		{ "drawq", w_drawq },*/
