@@ -136,6 +136,32 @@ namespace sdl
 	{
 		return backgroundColor;
 	}
+
+	void Graphics::point(float x, float y)
+	{
+		pixelRGBA(surface, (int) x, (int) y,
+				foregroundColor.r, foregroundColor.g, foregroundColor.b, foregroundColor.a);
+	}
+
+	void Graphics::rectangle(DrawMode mode, float x, float y, float w, float h)
+	{
+		float x2 = x+w;
+		float y2 = y+h;
+
+		switch(mode)
+		{
+		case DRAW_LINE:
+			rectangleRGBA(surface, (int) x, (int) y, (int) x2, (int) y2,
+					foregroundColor.r, foregroundColor.g, foregroundColor.b, foregroundColor.a);
+			break;
+		case DRAW_FILL:
+			boxRGBA(surface, (int) x, (int) y, (int) x2, (int) y2,
+					foregroundColor.r, foregroundColor.g, foregroundColor.b, foregroundColor.a);
+			break;
+		default: // prevent warnings
+			break;
+		}
+	}
 } // sdl
 } // graphics
 } // love

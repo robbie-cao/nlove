@@ -47,10 +47,10 @@ namespace sdl
 	int w_getColor(lua_State *L);
 	int w_setBackgroundColor(lua_State *L);
 	int w_getBackgroundColor(lua_State *L);
-/*	int w_point(lua_State *L);
-	int w_triangle(lua_State *L);
+	int w_point(lua_State *L);
+/*	int w_triangle(lua_State *L);*/
 	int w_rectangle(lua_State *L);
-	int w_quad(lua_State *L);
+/*	int w_quad(lua_State *L);
 	int w_circle(lua_State *L);
 	int w_draw(lua_State *L);
 	int w_drawq(lua_State *L);*/
