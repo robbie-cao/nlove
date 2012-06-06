@@ -25,3 +25,4 @@
 ./modules/thread/win32/*
 ./modules/thread/posix/*
 ./launcher.cpp
+./modules/graphics/opengl/*
