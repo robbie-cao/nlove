@@ -57,8 +57,8 @@ namespace window
 
 		virtual bool isCreated() = 0;
 
-		virtual void setWindowTitle(std::string &title) = 0;
-		virtual std::string getWindowTitle() = 0;
+		virtual void setWindowTitle(const std::string &title) = 0;
+		virtual const std::string &getWindowTitle() = 0;
 
 		virtual bool setIcon(love::image::ImageData *imgd) = 0;
 

@@ -85,6 +85,124 @@ namespace sdl
 		return 1;
 	}
 
+	int w_reset(lua_State *L)
+	{
+		instance->reset();
+		return 0;
+	}
+
+	int w_clear(lua_State *L)
+	{
+		instance->clear();
+		return 0;
+	}
+
+	int w_present(lua_State *L)
+	{
+		instance->present();
+		return 0;
+	}
+
+	int w_setCaption(lua_State *L)
+	{
+		const char *caption = luaL_checkstring(L, 1);
+		instance->setCaption(caption);
+		return 0;
+	}
+
+	int w_getCaption(lua_State *L)
+	{
+		lua_pushstring(L, instance->getCaption());
+		return 1;
+	}
+
+/*	int w_newImage(lua_State *L)
+	{
+		return 0;
+	}
+
+	int w_newQuad(lua_State *L)
+	{
+		return 0;
+	}*/
+
+	int w_setColor(lua_State *L)
+	{
+		int r = luaL_checkint(L, 1);
+		int g = luaL_checkint(L, 2);
+		int b = luaL_checkint(L, 3);
+		int a = luaL_optint(L, 4, 255);
+		Color c(r, g, b, a);
+		instance->setColor(c);
+		return 0;
+	}
+
+	int w_getColor(lua_State *L)
+	{
+		Color c = instance->getColor();
+		lua_pushinteger(L, c.r);
+		lua_pushinteger(L, c.g);
+		lua_pushinteger(L, c.b);
+		lua_pushinteger(L, c.a);
+		return 4;
+	}
+
+	int w_setBackgroundColor(lua_State *L)
+	{
+		int r = luaL_checkint(L, 1);
+		int g = luaL_checkint(L, 2);
+		int b = luaL_checkint(L, 3);
+		int a = luaL_optint(L, 4, 255);
+		Color c(r, g, b, a);
+		instance->setBackgroundColor(c);
+		return 0;
+	}
+
+	int w_getBackgroundColor(lua_State *L)
+	{
+		Color c = instance->getBackgroundColor();
+		lua_pushinteger(L, c.r);
+		lua_pushinteger(L, c.g);
+		lua_pushinteger(L, c.b);
+		lua_pushinteger(L, c.a);
+		return 4;
+	}
+
+/*	int w_point(lua_State *L)
+	{
+		return 0;
+	}
+
+	int w_triangle(lua_State *L)
+	{
+		return 0;
+	}
+
+	int w_rectangle(lua_State *L)
+	{
+		return 0;
+	}
+
+	int w_quad(lua_State *L)
+	{
+		return 0;
+	}
+
+	int w_circle(lua_State *L)
+	{
+		return 0;
+	}
+
+	int w_draw(lua_State *L)
+	{
+		return 0;
+	}
+
+	int w_drawq(lua_State *L)
+	{
+		return 0;
+	}*/
+
 	// List of functions to wrap.
 	static const luaL_Reg functions[] = {
 		{ "setMode", w_setMode },
@@ -94,6 +212,24 @@ namespace sdl
 		{ "isCreated", w_isCreated },
 		{ "getWidth", w_getWidth },
 		{ "getHeight", w_getHeight },
+		{ "reset", w_reset },
+		{ "clear", w_clear },
+		{ "present", w_present },
+		{ "setCaption", w_setCaption },
+		{ "getCaption", w_getCaption },
+/*		{ "newImage", w_newImage },
+		{ "newQuad", w_newQuad },*/
+		{ "setColor", w_setColor },
+		{ "getColor", w_getColor },
+		{ "setBackgroundColor", w_setBackgroundColor },
+		{ "getBackgroundColor", w_getBackgroundColor },
+/*		{ "point", w_point },
+		{ "triangle", w_triangle },
+		{ "rectangle", w_rectangle },
+		{ "quad", w_quad },
+		{ "circle", w_circle },
+		{ "draw", w_draw },
+		{ "drawq", w_drawq },*/
 		{ 0, 0 }
 	};
 

@@ -28,9 +28,12 @@
 #include <image/Image.h>
 #include <image/ImageData.h>
 
-#include <window/Window.h>
+#include <window/sdl/Window.h>
 
 #include "Image.h"
+
+// SDL
+#include <SDL.h>
 
 namespace love
 {
@@ -41,7 +44,9 @@ namespace sdl
 	class Graphics : public love::graphics::Graphics
 	{
 	private:
-		love::window::Window *currentWindow;
+		love::window::sdl::Window *currentWindow;
+		Color foregroundColor, backgroundColor;
+		SDL_Surface *surface;
 
 	public:
 		Graphics();
@@ -57,23 +62,23 @@ namespace sdl
 		int getWidth();
 		int getHeight();
 
-/*		void reset();
+		void reset();
 		void clear();
 		void present();
 
 		void setCaption(const char *caption);
-		const char *getCaption();
+		const char *getCaption() const;
 
-		Image *newImage(love::filesystem::File *file);
+/*		Image *newImage(love::filesystem::File *file);
 		Image *newImage(love::image::ImageData *data);
-		Quad *newQuad(float x, float y, float w, float h, float sw, float sh);
+		Quad *newQuad(float x, float y, float w, float h, float sw, float sh);*/
 
 		void setColor(const Color &c);
 		Color getColor();
 		void setBackgroundColor(const Color &c);
 		Color getBackgroundColor();
 
-		void point(float x, float y);
+/*		void point(float x, float y);
 		void triangle(DrawMode mode, float x1, float y1, float x2, float y2, float x3, float y3);
 		void rectangle(DrawMode mode, float x, float y, float w, float h);
 		void quad(DrawMode mode, float x1, float y1, float x2, float y2, float x3, float y3, float x4, float y4);

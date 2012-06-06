@@ -36,22 +36,24 @@ namespace sdl
 	int w_isCreated(lua_State *L);
 	int w_getWidth(lua_State *L);
 	int w_getHeight(lua_State *L);
-/*	int w_reset(lua_State *L);
+	int w_reset(lua_State *L);
 	int w_clear(lua_State *L);
 	int w_present(lua_State *L);
 	int w_setCaption(lua_State *L);
 	int w_getCaption(lua_State *L);
-	int w_newImage(lua_State *L);
-	int w_newQuad(lua_State *L);
+/*	int w_newImage(lua_State *L);
+	int w_newQuad(lua_State *L);*/
 	int w_setColor(lua_State *L);
 	int w_getColor(lua_State *L);
 	int w_setBackgroundColor(lua_State *L);
 	int w_getBackgroundColor(lua_State *L);
-	int w_point(lua_State *L);
+/*	int w_point(lua_State *L);
 	int w_triangle(lua_State *L);
 	int w_rectangle(lua_State *L);
 	int w_quad(lua_State *L);
-	int w_circle(lua_State *L);*/
+	int w_circle(lua_State *L);
+	int w_draw(lua_State *L);
+	int w_drawq(lua_State *L);*/
 	extern "C" LOVE_EXPORT int luaopen_love_graphics(lua_State *L);
 } // sdl
 } // graphics

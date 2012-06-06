@@ -21,7 +21,8 @@
 // LOVE
 #include "Graphics.h"
 
-#include <window/sdl/Window.h>
+// SDL
+#include "SDL_gfxPrimitives.h"
 
 namespace love
 {
@@ -30,8 +31,10 @@ namespace graphics
 namespace sdl
 {
 	Graphics::Graphics()
+		: surface(0)
 	{
-		currentWindow = love::window::sdl::Window::getSingleton();
+		currentWindow = love::window::sdl::Window::getSDLSingleton();
+		reset();
 	}
 
 	Graphics::~Graphics()
@@ -46,7 +49,10 @@ namespace sdl
 
 	bool Graphics::setMode(int width, int height, bool fullscreen, bool vsync, int fsaa)
 	{
-		return currentWindow->setWindow(width, height, fullscreen, vsync, fsaa);
+		bool success = currentWindow->setWindow(width, height, fullscreen, vsync, fsaa);
+		if (success)
+			surface = currentWindow->getSurface();
+		return success;
 	}
 
 	void Graphics::getMode(int &width, int &height, bool &fullscreen, bool &vsync, int &fsaa)
@@ -80,6 +86,55 @@ namespace sdl
 	int Graphics::getHeight()
 	{
 		return currentWindow->getHeight();
+	}
+
+	void Graphics::reset()
+	{
+		foregroundColor.set(255, 255, 255, 255);
+		backgroundColor.set(0, 0, 0, 255);
+	}
+
+	void Graphics::clear()
+	{
+		if (surface == 0)
+			return;
+		boxRGBA(surface, 0, 0, getWidth(), getHeight(),
+				backgroundColor.r, backgroundColor.g, backgroundColor.b, backgroundColor.a);
+	}
+
+	void Graphics::present()
+	{
+		currentWindow->swapBuffers();
+	}
+
+	void Graphics::setCaption(const char *caption)
+	{
+		currentWindow->setWindowTitle(caption);
+	}
+
+	const char *Graphics::getCaption() const
+	{
+		return currentWindow->getWindowTitle().c_str();
+	}
+
+	void Graphics::setColor(const Color &c)
+	{
+		foregroundColor = c;
+	}
+
+	Color Graphics::getColor()
+	{
+		return foregroundColor;
+	}
+
+	void Graphics::setBackgroundColor(const Color &c)
+	{
+		backgroundColor = c;
+	}
+
+	Color Graphics::getBackgroundColor()
+	{
+		return backgroundColor;
 	}
 } // sdl
 } // graphics

@@ -38,7 +38,7 @@ namespace window
 namespace sdl
 {
 	Window::Window()
-		: windowTitle(""), created(false), mouseVisible(true)
+		: windowTitle(""), created(false), mouseVisible(true), surface(0)
 	{
 		// Window should be centered.
 		SDL_putenv(const_cast<char *>("SDL_VIDEO_CENTERED=center"));
@@ -106,19 +106,22 @@ namespace sdl
 		Uint32 sdlflags = fullscreen ? SDL_FULLSCREEN : 0;
 
 		// Have SDL set the video mode.
-		if (SDL_SetVideoMode(width, height, 32, sdlflags) == 0)
+		surface = SDL_SetVideoMode(width, height, 32, sdlflags);
+		if (surface == 0)
 		{
 			bool failed = true;
 			if (fsaa > 0)
 			{
 				// FSAA might have failed, disable it and try again
 				//SDL_GL_SetAttribute(SDL_GL_MULTISAMPLESAMPLES, 0);
-				failed = SDL_SetVideoMode(width, height, 32, sdlflags) == 0;
+				surface = SDL_SetVideoMode(width, height, 32, sdlflags);
+				failed = (surface == 0);
 				if (failed)
 				{
 					// There might be no FSAA at all
 					//SDL_GL_SetAttribute(SDL_GL_MULTISAMPLEBUFFERS, 0);
-					failed = SDL_SetVideoMode(width, height, 32, sdlflags) == 0;
+					surface = SDL_SetVideoMode(width, height, 32, sdlflags);
+					failed = (surface == 0);
 				}
 			}
 			if (failed)
@@ -229,17 +232,14 @@ namespace sdl
 		return created;
 	}
 
-	void Window::setWindowTitle(std::string &title)
+	void Window::setWindowTitle(const std::string &title)
 	{
 		windowTitle = title;
 		SDL_WM_SetCaption(windowTitle.c_str(), 0);
 	}
 
-	std::string Window::getWindowTitle()
+	const std::string &Window::getWindowTitle()
 	{
-		// not a reference
-		// because we want this untouched
-		// const std::string& might be an option
 		return windowTitle;
 	}
 
@@ -271,6 +271,8 @@ namespace sdl
 	void Window::swapBuffers()
 	{
 		//SDL_GL_SwapBuffers();
+		if (surface)
+			SDL_Flip(surface);
 	}
 
 	bool Window::hasFocus()
@@ -296,6 +298,21 @@ namespace sdl
 			singleton->retain();
 
 		return singleton;
+	}
+
+	Window *Window::getSDLSingleton()
+	{
+		if (!singleton)
+			singleton = new Window();
+		else
+			singleton->retain();
+
+		return (Window*) singleton;
+	}
+
+	SDL_Surface *Window::getSurface()
+	{
+		return surface;
 	}
 
 	const char *Window::getName() const
