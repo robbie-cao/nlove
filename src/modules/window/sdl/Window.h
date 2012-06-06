@@ -24,6 +24,9 @@
 // LOVE
 #include <window/Window.h>
 
+// SDL
+#include <SDL.h>
+
 namespace love
 {
 namespace window
@@ -44,6 +47,7 @@ namespace sdl
 		} currentMode;
 		bool created;
 		bool mouseVisible;
+		SDL_Surface *surface;
 
 	public:
 		Window();
@@ -60,8 +64,8 @@ namespace sdl
 
 		bool isCreated();
 
-		void setWindowTitle(std::string &title);
-		std::string getWindowTitle();
+		void setWindowTitle(const std::string &title);
+		const std::string &getWindowTitle();
 
 		bool setIcon(love::image::ImageData *imgd);
 
@@ -72,6 +76,10 @@ namespace sdl
 		bool getMouseVisible();
 
 		static love::window::Window *getSingleton();
+
+		// SDL additions
+		static Window *getSDLSingleton();
+		SDL_Surface *getSurface();
 
 		const char *getName() const;
 	}; // Window
