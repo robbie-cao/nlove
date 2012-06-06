@@ -25,7 +25,7 @@
 #include <SDL.h>
 
 // OpenGL
-#include <SDL/SDL_opengl.h>
+//#include <SDL/SDL_opengl.h>
 
 // LOVE
 #include <common/config.h>
@@ -85,7 +85,7 @@ namespace sdl
 		setWindowTitle(windowTitle);
 		setMouseVisible(mouseVisible);
 
-		// Set GL attributes
+/*		// Set GL attributes
 		SDL_GL_SetAttribute(SDL_GL_RED_SIZE, 8);
 		SDL_GL_SetAttribute(SDL_GL_GREEN_SIZE, 8);
 		SDL_GL_SetAttribute(SDL_GL_BLUE_SIZE, 8);
@@ -99,10 +99,11 @@ namespace sdl
 		{
 			SDL_GL_SetAttribute(SDL_GL_MULTISAMPLEBUFFERS, 1);
 			SDL_GL_SetAttribute(SDL_GL_MULTISAMPLESAMPLES, fsaa);
-		}
+		}*/
 
 		// Fullscreen?
-		Uint32 sdlflags = fullscreen ? (SDL_OPENGL | SDL_FULLSCREEN) : SDL_OPENGL;
+		//Uint32 sdlflags = fullscreen ? (SDL_OPENGL | SDL_FULLSCREEN) : SDL_OPENGL;
+		Uint32 sdlflags = fullscreen ? SDL_FULLSCREEN : 0;
 
 		// Have SDL set the video mode.
 		if (SDL_SetVideoMode(width, height, 32, sdlflags) == 0)
@@ -111,12 +112,12 @@ namespace sdl
 			if (fsaa > 0)
 			{
 				// FSAA might have failed, disable it and try again
-				SDL_GL_SetAttribute(SDL_GL_MULTISAMPLESAMPLES, 0);
+				//SDL_GL_SetAttribute(SDL_GL_MULTISAMPLESAMPLES, 0);
 				failed = SDL_SetVideoMode(width, height, 32, sdlflags) == 0;
 				if (failed)
 				{
 					// There might be no FSAA at all
-					SDL_GL_SetAttribute(SDL_GL_MULTISAMPLEBUFFERS, 0);
+					//SDL_GL_SetAttribute(SDL_GL_MULTISAMPLEBUFFERS, 0);
 					failed = SDL_SetVideoMode(width, height, 32, sdlflags) == 0;
 				}
 			}
@@ -136,7 +137,7 @@ namespace sdl
 			height = videoinfo->current_h;
 		}
 
-		if (fsaa > 0)
+		/*if (fsaa > 0)
 			glEnable(GL_MULTISAMPLE);
 
 		GLint buffers;
@@ -154,14 +155,14 @@ namespace sdl
 
 		// Get the actual vsync status
 		int real_vsync;
-		SDL_GL_GetAttribute(SDL_GL_SWAP_CONTROL, &real_vsync);
+		SDL_GL_GetAttribute(SDL_GL_SWAP_CONTROL, &real_vsync);*/
 
 		// Set the new display mode as the current display mode.
 		currentMode.width = width;
 		currentMode.height = height;
 		currentMode.fsaa = fsaa;
 		currentMode.fullscreen = fullscreen;
-		currentMode.vsync = (real_vsync != 0);
+		currentMode.vsync = vsync;
 
 		return true;
 	}
@@ -177,7 +178,8 @@ namespace sdl
 
 	bool Window::checkWindowSize(int width, int height, bool fullscreen)
 	{
-		Uint32 sdlflags = fullscreen ? (SDL_OPENGL | SDL_FULLSCREEN) : SDL_OPENGL;
+		//Uint32 sdlflags = fullscreen ? (SDL_OPENGL | SDL_FULLSCREEN) : SDL_OPENGL;
+		Uint32 sdlflags = fullscreen ? SDL_FULLSCREEN : 0;
 
 		// Check if mode is supported
 		int bpp = SDL_VideoModeOK(width, height, 32, sdlflags);
@@ -189,7 +191,7 @@ namespace sdl
 
 	WindowSize **Window::getFullscreenSizes(int &n)
 	{
-		SDL_Rect ** modes = SDL_ListModes(0, SDL_OPENGL | SDL_FULLSCREEN);
+		SDL_Rect ** modes = SDL_ListModes(0, /*SDL_OPENGL | */SDL_FULLSCREEN);
 
 		if (modes == (SDL_Rect **)0 || modes == (SDL_Rect **)-1)
 		{
@@ -268,7 +270,7 @@ namespace sdl
 
 	void Window::swapBuffers()
 	{
-		SDL_GL_SwapBuffers();
+		//SDL_GL_SwapBuffers();
 	}
 
 	bool Window::hasFocus()
